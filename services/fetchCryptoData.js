@@ -19,16 +19,15 @@ const fetchCryptoData = async () => {
     ];
 
     for (const crypto of cryptoData) {
-      await Crypto.findOneAndUpdate(
-        { id: crypto.id },
-        {
-          name: crypto.id,
-          current_price: crypto.usd,
-          market_cap: crypto.usd_market_cap,
-          change_24h: crypto.usd_24h_change,
-        },
-        { upsert: true, new: true }
-      );
+      const newRecord = {
+        id: crypto.id,
+        name: crypto.id,
+        current_price: crypto.usd,
+        market_cap: crypto.usd_market_cap,
+        change_24h: crypto.usd_24h_change,
+        timestamp: new Date(),
+      };
+      await Crypto.create(newRecord);
     }
   } catch (error) {
     throw new Error("fetching crypto data:", error.message);

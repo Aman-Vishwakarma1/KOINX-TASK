@@ -19,7 +19,6 @@ mongoose
     console.error("Error connecting to DataBase:", err.message);
   });
 
-//this is IIFE so, it will fetch the data when server starts and then after every 2 hours.
 (async () => {
   await fetchCryptoData();
 })();
@@ -27,6 +26,9 @@ mongoose
 cron.schedule("0 */2 * * *", async () => {
   await fetchCryptoData();
 });
+
+app.use(require("./routes/statusRoute"));
+app.use(require("./routes/metricsRoutes"));
 
 app.get("/", (req, res, next) => {
   res.status(200).json({ message: "Server is Up and Fine !" });
