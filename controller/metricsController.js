@@ -14,7 +14,10 @@ exports.deviation = async (req, res, next) => {
   if (!coin || !["bitcoin", "matic-network", "ethereum"].includes(coin)) {
     return res
       .status(400)
-      .json({ error: "Invalid or missing coin parameter." });
+      .json({
+        error:
+          "Currently have data for bitcoin, matic-network and ethereum or missing coin parameter.",
+      });
   }
 
   try {
